@@ -1,0 +1,10 @@
+pystyle
+requests 
+inquirer
+colorama
+moviepy
+rich
+requests-html
+requests-random-user-agent
+pathlib
+googletrans
