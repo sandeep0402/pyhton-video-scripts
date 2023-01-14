@@ -24,8 +24,7 @@ def getFileList(path):
 	for entry in d.iterdir():
 		# check if it a file
 		if entry.is_file():
-			if !entry.startswith'.':
-				files.append(entry)
+			files.append(entry)
 	return files
 
 def divideAndJoinText(s, n):
