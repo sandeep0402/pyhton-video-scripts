@@ -8,3 +8,5 @@ requests-html
 requests-random-user-agent
 pathlib
 googletrans
+pilmoji
+ipyplot
