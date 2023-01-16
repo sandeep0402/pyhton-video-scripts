@@ -140,12 +140,17 @@ for ind, line in enumerate(lines):
 
 	audioclip = AudioFileClip(musicsSelected)#.set_duration(clip_duration)
 	new_audioclip = afx.audio_loop(audioclip, duration=clip_duration)
-	videoclip = video.set_audio(new_audioclip.set_start(1))
+	videoclip = video.set_audio(new_audioclip.set_start(0))
+
 
 	if musicMode==2:
+		videoclip1= videoclip.fx( volumex, 0.2)
 		audioclipFunny = AudioFileClip(musicFunnySelected).set_duration(clip_length)
-		new_audioclip = CompositeAudioClip([videoclip.audio, audioclipFunny])
+		new_audioclip = CompositeAudioClip([videoclip1.audio, audioclipFunny])
 		videoclip.audio = new_audioclip
+		#audioclipFunny = AudioFileClip(musicFunnySelected).set_duration(clip_length)
+		#new_audioclip = CompositeAudioClip([videoclip.audio, audioclipFunny])
+		#videoclip.audio = new_audioclip
 		
 	videoclip.write_videofile(output+"/test"+index+".mp4", verbose= False, logger= None, codec='libx264', audio_codec="aac")
 	clip.close()
