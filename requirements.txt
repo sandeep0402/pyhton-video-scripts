@@ -10,3 +10,6 @@ pathlib
 googletrans
 pilmoji
 ipyplot
+opencv-python
+pydub
+python-pptx
