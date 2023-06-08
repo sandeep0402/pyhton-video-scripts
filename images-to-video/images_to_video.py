@@ -16,12 +16,13 @@ import pathlib
 import random
 from PIL import Image, ImageDraw, ImageFont
 from pilmoji import Pilmoji
+from pathlib import Path
 
 def getFileList(path):
     files = []
     d = pathlib.Path(path)
     # iterate directory
-    for entry in d.iterdir():
+    for entry in sorted(d.iterdir()):
         # check if it a file
         if entry.is_file():
             files.append(entry)

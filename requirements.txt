@@ -13,3 +13,4 @@ ipyplot
 opencv-python
 pydub
 python-pptx
+pillow
