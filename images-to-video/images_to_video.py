@@ -30,7 +30,10 @@ def getFileList(path):
 install()
 console = Console()
 
-clip_length = 15
+musicsFunnySelectedMode = 1 #1. fix path,  !1 Random path
+bgMusicRequired = 0  #1. yes !1 no
+
+clip_length = 10
 dir= str(pathlib.Path().absolute())
 output= dir +"/output"
 isExist = os.path.exists(output)
@@ -40,8 +43,7 @@ musics = getFileList(dir +"/bg_music" )
 musicFunny = getFileList(dir +"/funny_sound" )
 tempImagePath = dir + "/temp-img.png"
 videoSelected = dir+"/sea1.mp4"
-musicsSelectedPath = dir+"/funny_sound/laugh.mp3"
-musicsSelectedMode = 1 #1. fix path,  2. Random path
+musicsFunnySelectedPath = dir+"/funny_sound/kiyaansh.mp3"
 
 if not isExist:
    # Create a new directory because it does not exist
@@ -58,15 +60,15 @@ for ind, img in enumerate(images):
     #select random video
     console.log("videoSelected=" +videoSelected)
     #select random music
-    if mode==1:
-        musicsSelected = str(musics[random.randrange(len(musics))].absolute())
-    else:
-        musicsSelected = musicsSelectedPath
-    console.log("musicsSelected=" +musicsSelected)
+    musicsSelected = str(musics[random.randrange(len(musics))].absolute()) 
+    console.log("bgMusicRequired=",bgMusicRequired,", musicsSelected=" ,musicsSelected)
     #select random funny music
-    musicFunnySelected = str(musicFunny[random.randrange(len(musicFunny))].absolute())
-    console.log("musicFunnySelected=" +musicFunnySelected)
-
+    if (musicsFunnySelectedMode==1):
+        musicFunnySelected = musicsFunnySelectedPath
+    else:
+        musicFunnySelected = str(musicFunny[random.randrange(len(musicFunny))].absolute())     
+    console.log("musicsFunnySelectedMode=",musicsFunnySelectedMode,", musicFunnySelected=" ,musicFunnySelected)    
+    
     # loading video dsa gfg intro video 
     clip = VideoFileClip(videoSelected) 
     # getting video for only starting 10 seconds 
@@ -80,21 +82,24 @@ for ind, img in enumerate(images):
 
     # Overlay the text clip on the first video clip 
     videoclip = CompositeVideoClip([clip, image_clip]) 
-        
     clip_duration = videoclip.duration
 
-    musicsSelectedClip = AudioFileClip(musicsSelected)#.set_duration(clip_duration)
-    musicsSelectedClip = afx.audio_loop(musicsSelectedClip, duration=clip_duration)
-
     musicFunnySelectedClip = AudioFileClip(musicFunnySelected).set_duration(clip_length)
-    new_audioclip = CompositeAudioClip([musicsSelectedClip.volumex(0.2), musicFunnySelectedClip])
-    videoclip.audio = new_audioclip
-        
+
+    if (bgMusicRequired==1):
+        musicsSelectedClip = AudioFileClip(musicsSelected)#.set_duration(clip_duration)
+        musicsSelectedClip = afx.audio_loop(musicsSelectedClip, duration=clip_duration)
+        new_audioclip = CompositeAudioClip([musicsSelectedClip.volumex(0.2), musicFunnySelectedClip])
+        videoclip.audio = new_audioclip
+    else:
+        videoclip.audio = musicFunnySelectedClip
+
     videoclip.write_videofile(output+"/test"+index+".mp4", verbose= False, logger= None, codec='libx264', audio_codec="aac")
     clip.close()
     image_clip.close()
-    musicsSelectedClip.close()
     musicFunnySelectedClip.close()
+    if (bgMusicRequired==1):
+        musicsSelectedClip.close()
 console.log("Done processing")
 
 
