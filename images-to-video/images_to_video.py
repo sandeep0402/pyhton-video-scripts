@@ -17,6 +17,7 @@ import random
 from PIL import Image, ImageDraw, ImageFont
 from pilmoji import Pilmoji
 from pathlib import Path
+from datetime import datetime
 
 def getFileList(path):
     files = []
@@ -52,6 +53,8 @@ if not isExist:
    print("The output directory is created!")
 
 console.log("Processing...")
+current_datetime_str = str(datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
+print("Current date & time : ", current_datetime_str)
 #print(TextClip.list('font'))
 for ind, img in enumerate(images):
     image = str(images[ind].absolute())
@@ -95,7 +98,7 @@ for ind, img in enumerate(images):
     else:
         videoclip.audio = musicFunnySelectedClip
 
-    videoclip.write_videofile(output+"/test"+index+".mp4", verbose= False, logger= None, codec='libx264', audio_codec="aac")
+    videoclip.write_videofile(output+"/video_"+current_datetime_str+"_"+index+".mp4", verbose= False, logger= None, codec='libx264', audio_codec="aac")
     clip.close()
     image_clip.close()
     musicFunnySelectedClip.close()
